@@ -8,3 +8,7 @@ var config = {
     messagingSenderId: "542622033065"
   };
   firebase.initializeApp(config);
+
+  $("#add-train-btn").on("click", function(event){
+      event.preventDefault();
+  })
