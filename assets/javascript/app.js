@@ -9,6 +9,35 @@ var config = {
   };
   firebase.initializeApp(config);
 
-  $("#add-train-btn").on("click", function(event){
-      event.preventDefault();
-  })
+var trainInfo = firebase.data();
+
+
+  $("#add-train-btn").on("click", function(){
+
+    var trainName = $("#trainInput").val().trim();
+    var destination = $("#destinationInput").val().trim();
+    var firstTrain = $("#firstTT").val().trim();
+    var frequency = $("#frequency").val().trim();
+
+    var newTrain = {
+        name: trainName,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency,
+    };
+
+    trainInfo.ref().push(newTrain);
+
+    // Alert the Train was added
+    alert("The train you have entered has been successfully added.");
+
+    // Clears all of the input fields.
+    $("#trainInput").val("");
+    $("#destinationInput").val("");
+    $("#firstTT").val("");
+    $("#frequency").val("");
+
+    return false;
+
+  });
+
