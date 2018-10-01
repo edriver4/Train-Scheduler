@@ -50,7 +50,7 @@ var trainInfo = firebase.database();
     var tFirstTrainTime = childSnapshot.val().firstTrain;
 
     var timeArrival = tFirstTrainTime.split(":");
-    var trainTime = moment().hours(timeArrival[0]).minutes(timeArr[1]);
+    var trainTime = moment().hours(timeArrival[0]).minutes(timeArrival[1]);
     var maxMoment = moment.max(moment(), trainTime);
     var tMinutes;
     var tArrival;
