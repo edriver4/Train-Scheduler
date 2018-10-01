@@ -9,7 +9,7 @@ var config = {
   };
   firebase.initializeApp(config);
 
-var trainInfo = firebase.data();
+var trainInfo = firebase.database();
 
 
   $("#add-train-btn").on("click", function(){
@@ -39,5 +39,33 @@ var trainInfo = firebase.data();
 
     return false;
 
+  });
+
+  trainInfo.ref().on("child_added", function(childSnapshot, prevChildKey){
+
+
+    var tName = childSnapshot.val().name;
+    var tDestination = childSnapshot.val().destination;
+    var tFrequency = childSnapshot.val().frequency;
+    var tFirstTrainTime = childSnapshot.val().firstTrain;
+
+    var timeArrival = tFirstTrainTime.split(":");
+    var trainTime = moment().hours(timeArrival[0]).minutes(timeArr[1]);
+    var maxMoment = moment.max(moment(), trainTime);
+    var tMinutes;
+    var tArrival;
+
+    if (maxMoment === trainTime) {
+        tArrival = trainTime.format("hh:mm A");
+        tMinutes = trainTime.diff(moment(), "minutes");
+    } else {
+        var differenceTimes = moment().diff(trainTime, "minutes");
+        var tRemainder = differenceTimes % tFrequency;
+        tMinutes = tFrequency - tRemainder;
+
+        tArrival = moment().add(tMinutes, "m").format("hh:mm A");
+    }
+
+    $("#train-table > tbody").append("<tr><td>" + tName + "</td><td>" + tDestination + "</td><td>" + tFrequency + "</td><td>" + tArrival + "</td><td>" + tMinutes + "</td></tr>");
   });
 
