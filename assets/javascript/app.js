@@ -11,7 +11,7 @@ var config = {
 
 var trainInfo = firebase.database();
 
-
+// Adds train when the submit button is clicked
   $("#add-train-btn").on("click", function(){
 
     var trainName = $("#trainInput").val().trim();
